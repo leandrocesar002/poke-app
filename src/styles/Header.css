@@ -1,0 +1,254 @@
+.header {
+  background: #DC0A2D;
+  padding: 0.75rem 1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: white;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.pokeball-logo {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  position: relative;
+  overflow: hidden;
+  background: white;
+}
+
+.pokeball-logo .ball-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: white;
+}
+
+.pokeball-logo .ball-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: white;
+}
+
+.pokeball-logo .ball-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  background: white;
+  border: 2px solid #1D1D1D;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+
+.pokeball-logo .ball-center::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: -12px;
+  right: -12px;
+  height: 2px;
+  background: #1D1D1D;
+  transform: translateY(-50%);
+}
+
+.logout-btn {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  color: white;
+  transition: background 0.2s;
+}
+
+.logout-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.logout-btn svg {
+  width: 18px;
+  height: 18px;
+}
+.header-search {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.search-field {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-field svg {
+  position: absolute;
+  left: 0.75rem;
+  width: 16px;
+  height: 16px;
+  color: #DC0A2D;
+  pointer-events: none;
+}
+
+.search-field input {
+  width: 100%;
+  padding: 0.625rem 0.75rem 0.625rem 2.25rem;
+  background: white;
+  border: none;
+  border-radius: 24px;
+  font-size: 0.875rem;
+  color: #1D1D1D;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.search-field input::placeholder {
+  color: #999;
+}
+
+.search-field input:focus {
+  outline: none;
+}
+
+.sort-btn {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  font-weight: 700;
+  font-size: 0.875rem;
+  color: white;
+  transition: all 0.2s;
+}
+
+.sort-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.sort-btn.active {
+  background: white;
+  color: #DC0A2D;
+}
+
+@media (min-width: 480px) {
+  .header {
+    padding: 0.875rem 1.25rem 1.125rem;
+    gap: 0.875rem;
+  }
+
+  .logo {
+    font-size: 1.375rem;
+    gap: 0.625rem;
+  }
+
+  .pokeball-logo {
+    width: 26px;
+    height: 26px;
+  }
+
+  .search-field input {
+    padding: 0.75rem 1rem 0.75rem 2.5rem;
+    font-size: 0.9rem;
+  }
+
+  .search-field svg {
+    left: 0.875rem;
+    width: 18px;
+    height: 18px;
+  }
+
+  .sort-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .header {
+    padding: 1rem 1.5rem 1.25rem;
+    gap: 1rem;
+  }
+
+  .logo {
+    font-size: 1.5rem;
+    gap: 0.75rem;
+  }
+
+  .pokeball-logo {
+    width: 28px;
+    height: 28px;
+  }
+
+  .logout-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .logout-btn svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .header-search {
+    gap: 0.75rem;
+  }
+
+  .search-field input {
+    padding: 0.875rem 1rem 0.875rem 2.75rem;
+    font-size: 0.95rem;
+  }
+
+  .sort-btn {
+    width: 44px;
+    height: 44px;
+    font-size: 1.1rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+  }
+
+  .header-top {
+    gap: 1rem;
+  }
+
+  .header-search {
+    flex: 1;
+    max-width: 400px;
+  }
+}
+

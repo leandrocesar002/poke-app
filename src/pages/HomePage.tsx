@@ -1,0 +1,120 @@
+import { useState, useEffect, useCallback } from 'react'
+import { Helmet } from 'react-helmet-async'
+import { useAuth } from '../contexts/AuthContext'
+import { pokemonApi, Pokemon } from '../services/api'
+import PokemonCard from '../components/PokemonCard'
+import Pagination from '../components/Pagination'
+import Header from '../components/Header'
+import '../styles/HomePage.css'
+
+function HomePage() {
+  const { logout } = useAuth()
+  const [pokemon, setPokemon] = useState<Pokemon[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState('')
+  const [search, setSearch] = useState('')
+  const [sortByNumber, setSortByNumber] = useState(true)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(1)
+  const ITEMS_PER_PAGE = 21
+
+  const fetchPokemon = useCallback(async () => {
+    setIsLoading(true)
+    setError('')
+
+    const offset = (currentPage - 1) * ITEMS_PER_PAGE
+
+    const response = await pokemonApi.getList({
+      limit: ITEMS_PER_PAGE,
+      offset,
+      search: search || undefined,
+      sortBy: sortByNumber ? 'number' : 'name',
+      sortOrder: 'asc'
+    })
+
+    if (response.success && response.data) {
+      setPokemon(response.data.results)
+      setTotalPages(Math.ceil(response.data.pagination.total / ITEMS_PER_PAGE))
+    } else {
+      setError(response.error || 'Failed to load Pokémon')
+    }
+
+    setIsLoading(false)
+  }, [currentPage, search, sortByNumber])
+
+  useEffect(() => {
+    fetchPokemon()
+  }, [fetchPokemon])
+
+  useEffect(() => {
+    setCurrentPage(1)
+  }, [search, sortByNumber])
+
+  const handleSearch = (value: string) => {
+    setSearch(value)
+  }
+
+  const toggleSortMode = () => {
+    setSortByNumber(!sortByNumber)
+  }
+
+  return (
+    <>
+      <Helmet>
+        <title>Pokédex</title>
+        <meta name="description" content="Browse and search through hundreds of Pokémon." />
+      </Helmet>
+
+      <div className="home-page">
+        <Header 
+          onLogout={logout}
+          searchValue={search}
+          onSearchChange={handleSearch}
+          sortByNumber={sortByNumber}
+          onToggleSort={toggleSortMode}
+        />
+
+        <main className="main-content">
+          {error && (
+            <div className="error-message">
+              <p>{error}</p>
+              <button onClick={fetchPokemon}>Try Again</button>
+            </div>
+          )}
+
+          {isLoading ? (
+            <div className="loading-container">
+              <div className="pokeball-loader"></div>
+              <p>Loading...</p>
+            </div>
+          ) : (
+            <>
+              {pokemon.length === 0 ? (
+                <div className="no-results">
+                  <p>No Pokémon found</p>
+                </div>
+              ) : (
+                <div className="pokemon-grid">
+                  {pokemon.map((p) => (
+                    <PokemonCard key={p.id} pokemon={p} />
+                  ))}
+                </div>
+              )}
+
+              {totalPages > 1 && (
+                <Pagination
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  onPageChange={setCurrentPage}
+                />
+              )}
+            </>
+          )}
+        </main>
+      </div>
+    </>
+  )
+}
+
+export default HomePage
+

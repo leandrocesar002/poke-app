@@ -1,0 +1,238 @@
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #EFEFEF;
+}
+
+.login-hero {
+  background: #DC0A2D;
+  padding: 3rem 2rem 4rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.pokeball-bg {
+  position: absolute;
+  top: -50%;
+  right: -30%;
+  width: 300px;
+  height: 300px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.08) 50%);
+  border-radius: 50%;
+}
+
+.login-brand {
+  position: relative;
+  text-align: center;
+  color: white;
+}
+
+.pokeball-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1.5rem;
+  border-radius: 50%;
+  position: relative;
+  background: white;
+  overflow: hidden;
+}
+
+.pokeball-icon .ball-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: #DC0A2D;
+}
+
+.pokeball-icon .ball-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: white;
+}
+
+.pokeball-icon .ball-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  background: white;
+  border: 4px solid #1D1D1D;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+
+.pokeball-icon .ball-center::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: -40px;
+  right: -40px;
+  height: 4px;
+  background: #1D1D1D;
+  transform: translateY(-50%);
+}
+
+.login-brand h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.login-brand p {
+  opacity: 0.9;
+  font-size: 1rem;
+}
+
+.login-form-container {
+  flex: 1;
+  background: white;
+  border-radius: 24px 24px 0 0;
+  margin-top: -1.5rem;
+  padding: 2rem 1.5rem;
+}
+
+.login-form-container h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1D1D1D;
+  margin-bottom: 0.25rem;
+}
+
+.login-form-container .subtitle {
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.error-alert {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: #FEE2E2;
+  border-radius: 12px;
+  color: #DC2626;
+  font-size: 0.9rem;
+}
+
+.error-alert svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.input-group label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #333;
+}
+
+.input-group input {
+  padding: 1rem;
+  background: #F5F5F5;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  font-size: 1rem;
+  color: #1D1D1D;
+  transition: all 0.2s;
+}
+
+.input-group input:focus {
+  outline: none;
+  background: white;
+  border-color: #DC0A2D;
+}
+
+.input-group input::placeholder {
+  color: #999;
+}
+
+.input-group.error input {
+  border-color: #DC2626;
+  background: #FEF2F2;
+}
+
+.input-group .error-text {
+  font-size: 0.8rem;
+  color: #DC2626;
+}
+
+.submit-btn {
+  padding: 1rem;
+  background: #DC0A2D;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 12px;
+  margin-top: 0.5rem;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+}
+
+.submit-btn:hover:not(:disabled) {
+  background: #B8081F;
+  transform: translateY(-2px);
+}
+
+.submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.loading-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.demo-hint {
+  text-align: center;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid #EEE;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.demo-hint span {
+  color: #DC0A2D;
+  font-weight: 600;
+}
+
+@media (min-width: 480px) {
+  .login-form-container {
+    max-width: 400px;
+    margin: -1.5rem auto 0;
+    border-radius: 24px;
+  }
+}
+

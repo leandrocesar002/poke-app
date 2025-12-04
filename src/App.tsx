@@ -1,36 +1,79 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
+import { useAuth } from './contexts/AuthContext'
+import LoginPage from './pages/LoginPage'
+import HomePage from './pages/HomePage'
+import PokemonDetailPage from './pages/PokemonDetailPage'
+
+// Protected Route Component
+function ProtectedRoute({ children, redirectTo = '/login' }: { children: React.ReactNode; redirectTo?: string }) {
+  const { isAuthenticated, isLoading } = useAuth()
+
+  if (isLoading) {
+    return (
+      <div className="loading-screen">
+        <div className="pokeball-loader"></div>
+        <p>Loading...</p>
+      </div>
+    )
+  }
+
+  if (!isAuthenticated) {
+    return <Navigate to={redirectTo} replace />
+  }
+
+  return <>{children}</>
+}
+
+// Public Route Component (redirects to home if already logged in)
+function PublicRoute({ children, redirectTo = '/' }: { children: React.ReactNode; redirectTo?: string }) {
+  const { isAuthenticated, isLoading } = useAuth()
+
+  if (isLoading) {
+    return (
+      <div className="loading-screen">
+        <div className="pokeball-loader"></div>
+        <p>Loading...</p>
+      </div>
+    )
+  }
+
+  if (isAuthenticated) {
+    return <Navigate to={redirectTo} replace />
+  }
+
+  return <>{children}</>
+}
 
 function App() {
   return (
-    <Router>
-      <div className="min-h-screen bg-gray-100">
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-        </Routes>
-      </div>
-    </Router>
-  )
-}
-
-// Placeholder - será substituído pelo componente real
-function HomePage() {
-  return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
-      <h1 className="text-4xl font-bold text-gray-800 mb-4">
-        Pokédex
-      </h1>
-      <p className="text-gray-600">
-        Skeleton inicial configurado com sucesso!
-      </p>
-      <div className="mt-8 flex gap-4">
-        <div className="px-4 py-2 bg-pokemon-fire text-white rounded-lg">Fire</div>
-        <div className="px-4 py-2 bg-pokemon-water text-white rounded-lg">Water</div>
-        <div className="px-4 py-2 bg-pokemon-grass text-white rounded-lg">Grass</div>
-        <div className="px-4 py-2 bg-pokemon-electric text-black rounded-lg">Electric</div>
-      </div>
-    </div>
+    <Routes>
+      <Route
+        path="/login"
+        element={
+          <PublicRoute>
+            <LoginPage />
+          </PublicRoute>
+        }
+      />
+      <Route
+        path="/"
+        element={
+          <ProtectedRoute>
+            <HomePage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/pokemon/:id"
+        element={
+          <ProtectedRoute>
+            <PokemonDetailPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
   )
 }
 
 export default App
-
