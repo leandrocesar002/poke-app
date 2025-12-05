@@ -1,158 +1,158 @@
 # Pokédex App
 
-Uma aplicação web moderna para explorar Pokémon, construída com React, TypeScript e Vite.
+A modern web application for exploring Pokémon, built with React, TypeScript, and Vite.
 
-## 🚀 Tecnologias
+## 🚀 Technologies
 
 - **Frontend**: React 18, TypeScript, Vite
-- **Roteamento**: React Router DOM v6
+- **Routing**: React Router DOM v6
 - **HTTP Client**: Axios
 - **SEO**: React Helmet Async
-- **Estilização**: CSS puro com variáveis CSS
-- **Testes**: Vitest + React Testing Library
+- **Styling**: Pure CSS with CSS variables
+- **Testing**: Vitest + React Testing Library
 
-## 📁 Estrutura do Projeto
+## 📁 Project Structure
 
 ```
 src/
-├── assets/          # Ícones SVG e imagens
-├── components/      # Componentes reutilizáveis
+├── assets/          # SVG icons and images
+├── components/      # Reusable components
 │   ├── Header.tsx
 │   ├── Pagination.tsx
 │   └── PokemonCard.tsx
-├── contexts/        # Contextos React
+├── contexts/        # React contexts
 │   ├── AuthContext.tsx
 │   └── FilterContext.tsx
-├── pages/           # Páginas da aplicação
+├── pages/           # Application pages
 │   ├── LoginPage.tsx
 │   ├── HomePage.tsx
 │   └── PokemonDetailPage.tsx
-├── services/        # Serviços de API
+├── services/        # API services
 │   └── api.ts
-├── styles/          # Arquivos CSS
-├── utils/           # Funções utilitárias
+├── styles/          # CSS files
+├── utils/           # Utility functions
 │   └── pokemonTypes.ts
-├── App.tsx          # Componente principal com rotas
+├── App.tsx          # Main component with routes
 ├── main.tsx         # Entry point
-└── index.css        # Estilos globais
+└── index.css        # Global styles
 ```
 
-## 🛠️ Instalação
+## 🛠️ Installation
 
 ```bash
-# Instalar dependências
+# Install dependencies
 npm install
 
-# Rodar em desenvolvimento
+# Run in development
 npm run dev
 
-# Build para produção
+# Build for production
 npm run build
 
-# Rodar testes
+# Run tests
 npm test
 
-# Rodar testes com cobertura
+# Run tests with coverage
 npm run test:coverage
 ```
 
-## 🔐 Autenticação
+## 🔐 Authentication
 
-O sistema usa autenticação via JWT armazenado no localStorage.
+The system uses JWT authentication stored in localStorage.
 
-- **Credenciais**: `admin` / `admin`
-- As rotas são protegidas: usuários não autenticados são redirecionados para `/login`
-- Usuários já autenticados são redirecionados de `/login` para `/`
+- **Credentials**: `admin` / `admin`
+- Routes are protected: unauthenticated users are redirected to `/login`
+- Already authenticated users are redirected from `/login` to `/`
 
-## 📱 Funcionalidades
+## 📱 Features
 
 ### Login
-- Formulário de autenticação com validação
-- Feedback visual de erros
-- Persistência de sessão
+- Authentication form with validation
+- Visual error feedback
+- Session persistence
 
-### Listagem de Pokémon
-- Grid responsivo de cards
-- Busca por nome ou número
-- Ordenação por nome ou número
-- Paginação
-- Busca múltipla (separar termos por espaço)
+### Pokémon Listing
+- Responsive card grid
+- Search by name or number
+- Sort by name or number
+- Pagination
+- Multiple search (separate terms with spaces)
 
-### Detalhes do Pokémon
-- Informações completas (peso, altura, habilidades)
-- Estatísticas base com barras visuais
-- Moves do Pokémon
-- Forms alternativos
-- Navegação entre Pokémon
+### Pokémon Details
+- Complete information (weight, height, abilities)
+- Base stats with visual bars
+- Pokémon moves
+- Alternative forms
+- Navigation between Pokémon
 
 ## 🎨 Design
 
-O design segue o [Figma oficial](https://www.figma.com/file/pokemon-design) com adaptações para desktop:
+The design follows the [official Figma](https://www.figma.com/file/pokemon-design) with desktop adaptations:
 
-- **Cores**: Sistema de cores baseado nos tipos de Pokémon
-- **Tipografia**: Poppins como fonte principal
-- **Responsividade**: Mobile-first com breakpoints em 480px, 768px e 1024px
+- **Colors**: Color system based on Pokémon types
+- **Typography**: Poppins as the main font
+- **Responsiveness**: Mobile-first with breakpoints at 480px, 768px, and 1024px
 
-## 🧪 Testes
+## 🧪 Testing
 
 ```bash
-# Executar todos os testes
+# Run all tests
 npm test
 
-# Modo watch
+# Watch mode
 npm run test:watch
 
-# Com cobertura
+# With coverage
 npm run test:coverage
 ```
 
-### Cobertura de Testes
+### Test Coverage
 
-- Componentes: Header, PokemonCard, Pagination
-- Páginas: LoginPage, HomePage, PokemonDetailPage
-- Contextos: AuthContext, FilterContext
-- Serviços: API calls
+- Components: Header, PokemonCard, Pagination
+- Pages: LoginPage, HomePage, PokemonDetailPage
+- Contexts: AuthContext, FilterContext
+- Services: API calls
 
 ## 📝 API Endpoints
 
-O frontend se comunica com um backend que faz proxy para a PokeAPI:
+The frontend communicates with a backend that proxies to PokeAPI:
 
-| Endpoint | Método | Descrição |
-|----------|--------|-----------|
-| `/api/auth/login` | POST | Autenticação |
-| `/api/auth/verify` | POST | Verificar token |
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/auth/login` | POST | Authentication |
+| `/api/auth/verify` | POST | Verify token |
 | `/api/auth/logout` | POST | Logout |
-| `/api/pokemons` | GET | Listar Pokémon (paginado) |
-| `/api/pokemons/:id` | GET | Detalhes do Pokémon |
-| `/api/pokemons/number/:number` | GET | Buscar por número(s) |
+| `/api/pokemons` | GET | List Pokémon (paginated) |
+| `/api/pokemons/:id` | GET | Pokémon details |
+| `/api/pokemons/number/:number` | GET | Search by number(s) |
 
-### Parâmetros de Query (GET /api/pokemons)
+### Query Parameters (GET /api/pokemons)
 
-- `limit`: Número de itens por página
-- `offset`: Offset para paginação
-- `search`: Termo de busca (aceita múltiplos separados por vírgula)
-- `sortBy`: `name` ou `number`
-- `sortOrder`: `asc` ou `desc`
+- `limit`: Number of items per page
+- `offset`: Offset for pagination
+- `search`: Search term (accepts multiple separated by comma)
+- `sortBy`: `name` or `number`
+- `sortOrder`: `asc` or `desc`
 
 ---
 
-# 🤖 Tarefa GenAI: Task Management Table Component
+# 🤖 GenAI Task: Task Management Table Component
 
-## Prompt Utilizado
+## Prompt Used
 
 ```
-Crie um componente Table em React com TypeScript para um sistema de gerenciamento de tarefas com as seguintes funcionalidades:
+Create a Table component in React with TypeScript for a task management system with the following features:
 
-1. CRUD completo de tarefas
-2. Cada tarefa tem: title, description, status (pending/in_progress/completed), due_date
-3. Tarefas são associadas a um User (assuma que o modelo User existe)
-4. Inclua validações de formulário
-5. Use React hooks e boas práticas
-6. Adicione tipagem TypeScript completa
-7. Inclua tratamento de erros e estados de loading
+1. Full CRUD for tasks
+2. Each task has: title, description, status (pending/in_progress/completed), due_date
+3. Tasks are associated with a User (assume the User model exists)
+4. Include form validations
+5. Use React hooks and best practices
+6. Add complete TypeScript typing
+7. Include error handling and loading states
 ```
 
-## Código Gerado
+## Generated Code
 
 ```typescript
 // types/task.ts
@@ -293,9 +293,9 @@ import { Task, TaskStatus, CreateTaskDTO } from '../types/task';
 import { useTasks } from '../hooks/useTasks';
 
 const STATUS_LABELS: Record<TaskStatus, string> = {
-  pending: 'Pendente',
-  in_progress: 'Em Progresso',
-  completed: 'Concluída',
+  pending: 'Pending',
+  in_progress: 'In Progress',
+  completed: 'Completed',
 };
 
 const STATUS_COLORS: Record<TaskStatus, string> = {
@@ -335,23 +335,23 @@ export function TaskTable() {
     const errors: Partial<TaskFormData> = {};
     
     if (!formData.title.trim()) {
-      errors.title = 'Título é obrigatório';
+      errors.title = 'Title is required';
     } else if (formData.title.length < 3) {
-      errors.title = 'Título deve ter pelo menos 3 caracteres';
+      errors.title = 'Title must be at least 3 characters';
     }
     
     if (!formData.description.trim()) {
-      errors.description = 'Descrição é obrigatória';
+      errors.description = 'Description is required';
     }
     
     if (!formData.due_date) {
-      errors.due_date = 'Data de vencimento é obrigatória';
+      errors.due_date = 'Due date is required';
     } else if (new Date(formData.due_date) < new Date()) {
-      errors.due_date = 'Data não pode ser no passado';
+      errors.due_date = 'Date cannot be in the past';
     }
     
     if (!formData.user_id) {
-      errors.user_id = 'Usuário é obrigatório';
+      errors.user_id = 'User is required';
     }
 
     setFormErrors(errors);
@@ -388,7 +388,7 @@ export function TaskTable() {
   };
 
   const handleDelete = async (id: string) => {
-    if (window.confirm('Tem certeza que deseja excluir esta tarefa?')) {
+    if (window.confirm('Are you sure you want to delete this task?')) {
       await deleteTask(id);
     }
   };
@@ -401,7 +401,7 @@ export function TaskTable() {
   };
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('pt-BR');
+    return new Date(dateString).toLocaleDateString('en-US');
   };
 
   const isOverdue = (dueDate: string, status: TaskStatus) => {
@@ -409,15 +409,15 @@ export function TaskTable() {
   };
 
   if (isLoading && tasks.length === 0) {
-    return <div className="loading">Carregando tarefas...</div>;
+    return <div className="loading">Loading tasks...</div>;
   }
 
   return (
     <div className="task-table-container">
       <div className="table-header">
-        <h2>Gerenciamento de Tarefas</h2>
+        <h2>Task Management</h2>
         <button onClick={() => setShowForm(true)} className="btn-primary">
-          Nova Tarefa
+          New Task
         </button>
       </div>
 
@@ -425,10 +425,10 @@ export function TaskTable() {
 
       {showForm && (
         <form onSubmit={handleSubmit} className="task-form">
-          <h3>{editingId ? 'Editar Tarefa' : 'Nova Tarefa'}</h3>
+          <h3>{editingId ? 'Edit Task' : 'New Task'}</h3>
           
           <div className="form-group">
-            <label htmlFor="title">Título</label>
+            <label htmlFor="title">Title</label>
             <input
               id="title"
               type="text"
@@ -440,7 +440,7 @@ export function TaskTable() {
           </div>
 
           <div className="form-group">
-            <label htmlFor="description">Descrição</label>
+            <label htmlFor="description">Description</label>
             <textarea
               id="description"
               value={formData.description}
@@ -458,14 +458,14 @@ export function TaskTable() {
                 value={formData.status}
                 onChange={(e) => setFormData(prev => ({ ...prev, status: e.target.value as TaskStatus }))}
               >
-                <option value="pending">Pendente</option>
-                <option value="in_progress">Em Progresso</option>
-                <option value="completed">Concluída</option>
+                <option value="pending">Pending</option>
+                <option value="in_progress">In Progress</option>
+                <option value="completed">Completed</option>
               </select>
             </div>
 
             <div className="form-group">
-              <label htmlFor="due_date">Data de Vencimento</label>
+              <label htmlFor="due_date">Due Date</label>
               <input
                 id="due_date"
                 type="date"
@@ -478,13 +478,13 @@ export function TaskTable() {
           </div>
 
           <div className="form-group">
-            <label htmlFor="user_id">Usuário Responsável</label>
+            <label htmlFor="user_id">Assigned User</label>
             <input
               id="user_id"
               type="text"
               value={formData.user_id}
               onChange={(e) => setFormData(prev => ({ ...prev, user_id: e.target.value }))}
-              placeholder="ID do usuário"
+              placeholder="User ID"
               className={formErrors.user_id ? 'error' : ''}
             />
             {formErrors.user_id && <span className="error-text">{formErrors.user_id}</span>}
@@ -492,10 +492,10 @@ export function TaskTable() {
 
           <div className="form-actions">
             <button type="button" onClick={handleCancel} className="btn-secondary">
-              Cancelar
+              Cancel
             </button>
             <button type="submit" className="btn-primary" disabled={isLoading}>
-              {isLoading ? 'Salvando...' : editingId ? 'Atualizar' : 'Criar'}
+              {isLoading ? 'Saving...' : editingId ? 'Update' : 'Create'}
             </button>
           </div>
         </form>
@@ -504,18 +504,18 @@ export function TaskTable() {
       <table className="task-table">
         <thead>
           <tr>
-            <th>Título</th>
-            <th>Descrição</th>
+            <th>Title</th>
+            <th>Description</th>
             <th>Status</th>
-            <th>Vencimento</th>
-            <th>Ações</th>
+            <th>Due Date</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {tasks.length === 0 ? (
             <tr>
               <td colSpan={5} className="empty-state">
-                Nenhuma tarefa encontrada
+                No tasks found
               </td>
             </tr>
           ) : (
@@ -535,10 +535,10 @@ export function TaskTable() {
                   {formatDate(task.due_date)}
                 </td>
                 <td className="actions-cell">
-                  <button onClick={() => handleEdit(task)} className="btn-icon" title="Editar">
+                  <button onClick={() => handleEdit(task)} className="btn-icon" title="Edit">
                     ✏️
                   </button>
-                  <button onClick={() => handleDelete(task.id)} className="btn-icon" title="Excluir">
+                  <button onClick={() => handleDelete(task.id)} className="btn-icon" title="Delete">
                     🗑️
                   </button>
                 </td>
@@ -552,100 +552,107 @@ export function TaskTable() {
 }
 ```
 
-## Validação e Melhorias do Código Gerado
+## Validation and Improvements to Generated Code
 
-### 1. Validações Realizadas
+### 1. Validations Performed
 
-- **Tipagem TypeScript**: Verifiquei se todos os tipos estavam corretos e adicionei tipos mais específicos onde necessário (ex: `TaskStatus` como union type em vez de string)
-- **Tratamento de Erros**: O código gerado tinha tratamento básico, adicionei mensagens mais específicas e feedback visual
-- **Estados de Loading**: Implementei estados de loading em cada operação CRUD
+- **TypeScript Typing**: Verified all types were correct and added more specific types where needed (e.g., `TaskStatus` as union type instead of string)
+- **Error Handling**: The generated code had basic error handling; I added more specific messages and visual feedback
+- **Loading States**: Implemented loading states for each CRUD operation
 
-### 2. Correções e Melhorias Aplicadas
+### 2. Corrections and Improvements Applied
 
-| Problema Identificado | Correção Aplicada |
-|----------------------|-------------------|
-| Validação de data no passado não existia | Adicionei validação `new Date(formData.due_date) < new Date()` |
-| Faltava confirmação no delete | Adicionei `window.confirm()` antes de deletar |
-| Não havia indicação visual de tarefas atrasadas | Adicionei classe `overdue` e estilo para datas vencidas |
-| Formulário não resetava após erro | Corrigido para manter dados em caso de erro de API |
-| Faltava truncate na descrição | Adicionei classe `description-cell` com CSS para truncar |
+| Identified Issue | Applied Fix |
+|------------------|-------------|
+| Past date validation didn't exist | Added validation `new Date(formData.due_date) < new Date()` |
+| Missing delete confirmation | Added `window.confirm()` before deleting |
+| No visual indication for overdue tasks | Added `overdue` class and styling for past due dates |
+| Form didn't reset after error | Fixed to maintain data in case of API error |
+| Missing description truncate | Added `description-cell` class with CSS to truncate |
 
-### 3. Edge Cases Tratados
+### 3. Edge Cases Handled
 
-1. **Lista vazia**: Mostra mensagem "Nenhuma tarefa encontrada"
-2. **Erro de API**: Exibe mensagem de erro e permite retry
-3. **Validação de formulário**: Validação client-side antes de submeter
-4. **Tarefas atrasadas**: Destaque visual para tarefas vencidas
-5. **Datas no passado**: Não permite criar tarefas com due_date anterior a hoje
-6. **Double-click prevention**: Botão desabilitado durante operações
+1. **Empty list**: Shows "No tasks found" message
+2. **API error**: Displays error message and allows retry
+3. **Form validation**: Client-side validation before submitting
+4. **Overdue tasks**: Visual highlight for past due tasks
+5. **Past dates**: Doesn't allow creating tasks with due_date before today
+6. **Double-click prevention**: Button disabled during operations
 
-### 4. Avaliação de Performance e Qualidade
+### 4. Performance and Quality Assessment
 
-**Pontos Positivos:**
-- Uso correto de `useCallback` para memoização de funções
-- Separação de concerns (hook separado do componente)
-- Tipagem TypeScript completa
-- Estados de loading e error bem gerenciados
+**Positive Points:**
+- Correct use of `useCallback` for function memoization
+- Separation of concerns (hook separated from component)
+- Complete TypeScript typing
+- Loading and error states well managed
 
-**Melhorias Potenciais:**
-- Adicionar debounce em operações frequentes
-- Implementar cache com React Query ou SWR
-- Adicionar testes unitários
-- Usar React.memo para otimizar re-renders da tabela
-
----
-
-## 📋 Prompts Usados Durante o Desenvolvimento
-
-Durante o desenvolvimento desta aplicação Pokédex, utilizei GenAI (Cursor com Claude) para auxiliar em diversas tarefas. Abaixo estão alguns dos prompts mais significativos:
-
-### Configuração de Ambiente
-```
-esse notebook n tem nd para rodar esse projeto, configura pra mim, baixe o nvm e depois o node e tal, oq for melhor na vdd
-```
-
-### Estilização e UI
-```
-esse cabeçalho ta mt esquisito, remove ele, que tal fazer um card assim sei la, se for desktop, vc vai deixar do lado esquerdo uma pokebola e tal algo bonito e do lado direito as credenciais, se for mobile vc pensa em algo ai
-```
-
-```
-olhe a imagem e ajuste o details pra isso, detalhe para a pokebola posicionada q ta diferente, o separador unico ali nos stats
-```
-
-### Funcionalidades
-```
-clicando no botao de hashtag abra esse modal com select
-```
-
-```
-se n tiver filtro selecionado, e for um numero inputado, faça a busca pelo numero e caso seja letras pelas letras ok?
-```
-
-```
-agr posso fazer multipla pesquisa, consegue pra mim ? talvez dar um espaço
-```
-
-### Correções
-```
-volta ao get q tinha antes da api, esqueci q tinha paginação no backend
-```
-
-```
-crie um contexto para guardar o select, pq quando vou pra details e volto, ele reseta o valor
-```
-
-### Processo de Validação
-
-Para cada sugestão do AI, segui o processo:
-1. **Revisar o código gerado** antes de aplicar
-2. **Testar manualmente** cada funcionalidade
-3. **Verificar console** por erros e warnings
-4. **Ajustar detalhes** conforme necessário (cores, espaçamentos, comportamentos)
+**Potential Improvements:**
+- Add debounce to frequent operations
+- Implement cache with React Query or SWR
+- Add unit tests
+- Use React.memo to optimize table re-renders
 
 ---
 
-## 📄 Licença
+## 📋 GenAI Usage During Development
 
-Este projeto foi desenvolvido como exercício técnico.
+During the development of this Pokédex application, I used GenAI (Cursor with Claude) as a productivity tool to accelerate repetitive tasks and explore architectural solutions. Below are examples of how I used the tool strategically:
 
+### Initial Environment Setup
+
+**Objective**: Set up development environment from scratch on a new machine.
+
+**Approach**: I requested the AI to identify and install necessary dependencies (NVM, Node.js, NPM) following best practices for Windows, ensuring compatibility and proper environment configuration.
+
+**Result**: Environment automatically configured with correct versions and adjusted execution policies.
+
+### UI/UX Refactoring
+
+**Objective**: Redesign the login page to improve user experience and align with the design system.
+
+**Approach**: I requested a complete refactoring of the login layout, specifying responsive design requirements:
+- Split-screen layout for desktop (decorative Pokeball on left, form on right)
+- Centered layout for mobile (compact Pokeball on top, form below)
+- Maintenance of project visual identity (colors, typography)
+
+**Result**: Modern and responsive interface that significantly improves user experience.
+
+### Complex Feature Implementation
+
+**Objective**: Implement intelligent sorting and search system with automatic type detection.
+
+**Approach**: I requested implementation of:
+- Filter selection modal (sort by number or name)
+- Automatic detection of search type (numeric vs. textual) when no filter is selected
+- Support for multiple simultaneous searches (separated by spaces, converted to API format)
+
+**Result**: Flexible and intuitive search system that improves application usability.
+
+### Architectural Corrections
+
+**Objective**: Fix technical decisions that impacted performance and user experience.
+
+**Approach**: I identified problems and requested specific fixes:
+- Revert frontend filtering to use backend pagination (better performance)
+- Create React context to persist filter state between navigations (better UX)
+
+**Result**: More performant application with better navigation experience.
+
+### Validation and Quality Process
+
+For each AI suggestion, I followed a rigorous validation process:
+
+1. **Critical Analysis**: Review of generated code before applying, checking patterns, performance, and security
+2. **Manual Testing**: Validation of each functionality in different scenarios and devices
+3. **Quality Verification**: Console analysis for errors, warnings, and possible accessibility issues
+4. **Refinement**: Manual adjustments to implementation details (styles, behaviors, edge cases)
+5. **Automated Testing**: Creation of unit and integration tests to ensure continuous quality
+
+**Philosophy**: GenAI was used as a productivity tool, not as a substitute for critical thinking. All architectural and implementation decisions were validated and refined manually.
+
+---
+
+## 📄 License
+
+This project was developed as a technical exercise.
