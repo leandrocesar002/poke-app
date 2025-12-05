@@ -527,6 +527,67 @@
   }
 }
 
+/* Moves Section */
+.stats-grid + h2 {
+  margin-top: 24px;
+}
+
+.moves-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.move-badge {
+  padding: 4px 8px;
+  background: var(--color-background);
+  border-radius: 10px;
+  font-size: 10px;
+  line-height: 14px;
+  color: var(--color-dark);
+}
+
+.more-moves {
+  padding: 4px 8px;
+  font-size: 10px;
+  color: var(--color-medium);
+  font-style: italic;
+}
+
+/* Forms List */
+.forms-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.form-badge {
+  padding: 4px 12px;
+  background: var(--color-background);
+  border-radius: 10px;
+  font-size: 10px;
+  line-height: 14px;
+  color: var(--color-dark);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.form-badge.default {
+  background: var(--color-light);
+}
+
+.default-tag {
+  font-size: 8px;
+  padding: 2px 4px;
+  background: var(--type-color);
+  color: white;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
 @media (min-width: 1024px) {
   .detail-container {
     max-width: 1000px;

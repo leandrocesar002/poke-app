@@ -214,6 +214,39 @@ function PokemonDetailPage() {
                 ))}
               </div>
             </div>
+
+            {pokemon.moves && pokemon.moves.length > 0 && (
+              <>
+                <h2 className="section-title" style={{ color: typeColor }}>Moves</h2>
+                <div className="moves-list">
+                  {pokemon.moves.slice(0, 10).map(move => (
+                    <span key={move.name} className="move-badge">
+                      {formatName(move.name)}
+                    </span>
+                  ))}
+                  {pokemon.moves.length > 10 && (
+                    <span className="more-moves">+{pokemon.moves.length - 10} more</span>
+                  )}
+                </div>
+              </>
+            )}
+
+            {pokemon.forms && pokemon.forms.length > 1 && (
+              <>
+                <h2 className="section-title" style={{ color: typeColor }}>Forms</h2>
+                <div className="forms-list">
+                  {pokemon.forms.map(form => (
+                    <span 
+                      key={form.name} 
+                      className={`form-badge ${form.isDefault ? 'default' : ''}`}
+                    >
+                      {formatName(form.name)}
+                      {form.isDefault && <span className="default-tag">Default</span>}
+                    </span>
+                  ))}
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>

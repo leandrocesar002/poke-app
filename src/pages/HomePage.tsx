@@ -18,22 +18,18 @@ function HomePage() {
   const [totalPages, setTotalPages] = useState(1)
   const ITEMS_PER_PAGE = 21
 
-  // Detecta se o search é número(s) ou texto
   const isNumericSearch = (value: string) => {
     const terms = value.trim().split(/\s+/)
     return terms.every(term => /^\d+$/.test(term))
   }
 
-  // Converte espaços em vírgulas para múltipla busca
   const formatSearchQuery = (value: string) => {
     return value.trim().split(/\s+/).join(',')
   }
 
-  // Determina se deve buscar por número
   const shouldSearchByNumber = (): boolean => {
     if (sortByNumber === true) return true
     if (sortByNumber === false) return false
-    // Auto-detect: se não tiver filtro selecionado
     return search ? isNumericSearch(search) : false
   }
 
@@ -44,7 +40,6 @@ function HomePage() {
     const searchByNumber = shouldSearchByNumber()
     const formattedSearch = search ? formatSearchQuery(search) : ''
 
-    // Se tiver search e for busca por número, usa o endpoint específico
     if (formattedSearch && searchByNumber) {
       const response = await pokemonApi.getByNumber(formattedSearch)
       
@@ -56,7 +51,6 @@ function HomePage() {
         setTotalPages(1)
       }
     } else {
-      // Busca normal (por nome ou listagem)
       const offset = (currentPage - 1) * ITEMS_PER_PAGE
 
       const response = await pokemonApi.getList({
