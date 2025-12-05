@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
 :root {
   /* Typography */
   --font-body1: 400 14px/16px 'Poppins', sans-serif;
@@ -15,8 +17,6 @@
   /* Colors - Primary */
   --color-primary: #DC0A2D;
 }
-
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
 * {
   margin: 0;
