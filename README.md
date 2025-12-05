@@ -222,11 +222,41 @@ src/
 
 ## 🛠️ Installation
 
+### Prerequisites
+
+- Node.js (v18 or higher recommended)
+- npm or yarn
+- Git
+
+### Backend Setup
+
+This application requires a backend server to be running. Follow these steps to set up the backend:
+
+```bash
+# Clone the backend repository
+git clone https://github.com/leandrocesar002/poke-backend.git
+
+# Navigate to the backend directory
+cd poke-backend
+
+# Install backend dependencies
+npm install
+
+# Start the backend server (usually runs on port 3001)
+npm start
+# or
+npm run dev
+```
+
+**Note**: Make sure the backend is running on `http://localhost:3001` before starting the frontend application.
+
+### Frontend Setup
+
 ```bash
 # Install dependencies
 npm install
 
-# Run in development
+# Run in development (runs on port 3000)
 npm run dev
 
 # Build for production
@@ -238,6 +268,24 @@ npm test
 # Run tests with coverage
 npm run test:coverage
 ```
+
+### Running the Application
+
+1. **Start the backend** (in the `poke-backend` directory):
+   ```bash
+   npm start
+   ```
+
+2. **Start the frontend** (in the `poke-app` directory):
+   ```bash
+   npm run dev
+   ```
+
+3. **Access the application**:
+   - Frontend: http://localhost:3000
+   - Backend API: http://localhost:3001
+
+The frontend is configured to proxy API requests from `/api/*` to `http://localhost:3001/api/*` automatically.
 
 ## 🔐 Authentication
 
