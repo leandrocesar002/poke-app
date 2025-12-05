@@ -1,0 +1,312 @@
+.header {
+  background: var(--color-primary);
+  padding: 12px 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-white);
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.pokeball-logo {
+  width: 24px;
+  height: 24px;
+  filter: brightness(0) invert(1);
+}
+
+.logout-btn {
+  display: none;
+}
+
+.header-search {
+  display: flex;
+  gap: 8px;
+  padding: 0 8px;
+}
+
+.search-field {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-field .search-icon {
+  position: absolute;
+  left: 12px;
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+}
+
+.search-field input {
+  width: 100%;
+  padding: 8px 32px 8px 36px;
+  background: var(--color-white);
+  border: none;
+  border-radius: 16px;
+  font: var(--font-body3);
+  color: var(--color-dark);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.search-field input::placeholder {
+  color: var(--color-medium);
+}
+
+.search-field input:focus {
+  outline: none;
+}
+
+.clear-btn {
+  position: absolute;
+  right: 8px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  padding: 0;
+}
+
+.clear-btn img {
+  width: 16px;
+  height: 16px;
+}
+
+.sort-btn {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-white);
+  border-radius: 50%;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.sort-btn:hover {
+  background: var(--color-background);
+}
+
+.sort-btn img {
+  width: 16px;
+  height: 16px;
+}
+
+@media (min-width: 480px) {
+  .header {
+    padding: 12px 8px;
+  }
+
+  .search-field input {
+    padding: 10px 36px 10px 40px;
+    font: var(--font-body2);
+  }
+
+  .clear-btn {
+    right: 10px;
+  }
+
+  .search-field .search-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .sort-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .sort-btn img {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+@media (min-width: 768px) {
+  .header {
+    padding: 12px;
+  }
+
+  .logo {
+    font-size: 28px;
+    gap: 10px;
+  }
+
+  .pokeball-logo {
+    width: 28px;
+    height: 28px;
+    filter: brightness(0) invert(1);
+  }
+
+  .header-search {
+    gap: 12px;
+  }
+
+  .search-field input {
+    padding: 12px 40px 12px 44px;
+    font: var(--font-body1);
+  }
+
+  .clear-btn {
+    right: 12px;
+    width: 24px;
+    height: 24px;
+  }
+
+  .clear-btn img {
+    width: 18px;
+    height: 18px;
+  }
+
+  .sort-btn {
+    width: 40px;
+    height: 40px;
+  }
+
+  .sort-btn img {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+  }
+
+  .header-top {
+    gap: 16px;
+  }
+
+  .header-search {
+    flex: 1;
+    max-width: 400px;
+  }
+}
+
+/* Sort Modal */
+.sort-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.sort-modal {
+  background: var(--color-primary);
+  border-radius: 12px;
+  padding: 4px;
+  width: 100%;
+  max-width: 280px;
+  animation: slideUp 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+@keyframes slideUp {
+  from { 
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.sort-modal h3 {
+  color: var(--color-white);
+  font: var(--font-body2);
+  font-weight: 600;
+  text-align: center;
+  padding: 12px;
+}
+
+.sort-options {
+  background: var(--color-white);
+  border-radius: 8px;
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sort-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background 0.15s;
+}
+
+.sort-option:hover {
+  background: var(--color-background);
+}
+
+.sort-option input {
+  display: none;
+}
+
+.sort-option .radio-custom {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--color-primary);
+  border-radius: 50%;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.sort-option input:checked + .radio-custom::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  background: var(--color-primary);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.sort-option span:last-child {
+  font: var(--font-body1);
+  color: var(--color-dark);
+}
