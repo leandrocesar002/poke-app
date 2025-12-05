@@ -2,6 +2,8 @@
 
 A modern web application for exploring Pokémon, built with React, TypeScript, and Vite.
 
+**Repository**: [https://github.com/leandrocesar002/poke-app](https://github.com/leandrocesar002/poke-app)
+
 ## 🚀 Technologies
 
 - **Frontend**: React 18, TypeScript, Vite
@@ -294,6 +296,35 @@ The system uses JWT authentication stored in localStorage.
 - **Credentials**: `admin` / `admin`
 - Routes are protected: unauthenticated users are redirected to `/login`
 - Already authenticated users are redirected from `/login` to `/pokemon/list`
+
+## 📖 User Stories
+
+This project was developed following an **informal user story-driven approach**. The development process was guided by understanding user needs and translating them into features. Below are the main user stories that shaped the application:
+
+### Authentication & Access
+- **As a user**, I want to log in with credentials so that I can access the Pokédex application
+- **As a user**, I want my session to persist across page reloads so that I don't have to log in repeatedly
+- **As a user**, I want to be redirected to login if I'm not authenticated so that I can't access protected content
+
+### Pokémon Discovery
+- **As a user**, I want to browse a list of Pokémon in a grid layout so that I can easily see multiple Pokémon at once
+- **As a user**, I want to search for Pokémon by name so that I can quickly find specific Pokémon
+- **As a user**, I want to search for Pokémon by number so that I can find Pokémon using their ID
+- **As a user**, I want to search for multiple Pokémon at once (e.g., "pikachu charizard") so that I can compare different Pokémon
+- **As a user**, I want to sort Pokémon by name or number so that I can organize the list according to my preference
+- **As a user**, I want my search and sort preferences to persist when navigating between pages so that I don't lose my context
+
+### Pokémon Details
+- **As a user**, I want to view detailed information about a Pokémon (weight, height, abilities, stats) so that I can learn more about it
+- **As a user**, I want to see all available moves for a Pokémon so that I can understand its capabilities
+- **As a user**, I want to see alternative forms of a Pokémon so that I can explore different variations
+- **As a user**, I want to navigate between Pokémon using arrows so that I can browse sequentially without going back to the list
+- **As a user**, I want to click on alternative forms to see their details so that I can explore different Pokémon variations
+
+### User Experience
+- **As a user**, I want the application to be responsive so that I can use it on mobile and desktop devices
+- **As a user**, I want visual feedback when actions are loading so that I know the application is working
+- **As a user**, I want error messages when something goes wrong so that I understand what happened
 
 ## 📱 Features
 
