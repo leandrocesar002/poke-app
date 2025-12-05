@@ -25,7 +25,7 @@ function ProtectedRoute({ children, redirectTo = '/login' }: { children: React.R
 }
 
 // Public Route Component (redirects to home if already logged in)
-function PublicRoute({ children, redirectTo = '/' }: { children: React.ReactNode; redirectTo?: string }) {
+function PublicRoute({ children, redirectTo = '/pokemon/list' }: { children: React.ReactNode; redirectTo?: string }) {
   const { isAuthenticated, isLoading } = useAuth()
 
   if (isLoading) {
@@ -56,7 +56,7 @@ function App() {
         }
       />
       <Route
-        path="/"
+        path="/pokemon/list"
         element={
           <ProtectedRoute>
             <HomePage />
@@ -71,7 +71,8 @@ function App() {
           </ProtectedRoute>
         }
       />
-      <Route path="*" element={<Navigate to="/" replace />} />
+      <Route path="/" element={<Navigate to="/pokemon/list" replace />} />
+      <Route path="*" element={<Navigate to="/pokemon/list" replace />} />
     </Routes>
   )
 }

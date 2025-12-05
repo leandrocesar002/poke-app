@@ -41,7 +41,7 @@ function LoginPage() {
     const result = await login(username, password)
 
     if (result.success) {
-      navigate('/')
+      navigate('/pokemon/list')
     } else {
       setError(result.error || 'Login failed')
     }

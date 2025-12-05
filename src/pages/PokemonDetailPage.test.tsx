@@ -8,6 +8,7 @@ import { pokemonApi, PokemonDetail } from '../services/api'
 vi.mock('../services/api', () => ({
   pokemonApi: {
     getById: vi.fn(),
+    getList: vi.fn(),
   },
 }))
 
@@ -259,6 +260,111 @@ describe('PokemonDetailPage', () => {
       expect(screen.getByText('SDEF')).toBeInTheDocument()
       expect(screen.getByText('SPD')).toBeInTheDocument()
     })
+  })
+
+  it('opens moves modal when clicking more moves button', async () => {
+    const pokemonWithManyMoves = {
+      ...mockPokemonDetail,
+      moves: Array.from({ length: 15 }, (_, i) => ({
+        name: `move-${i + 1}`,
+        learnMethod: 'level-up',
+      })),
+    }
+
+    vi.mocked(pokemonApi.getById).mockResolvedValue({
+      success: true,
+      data: pokemonWithManyMoves,
+    })
+    
+    renderDetailPage()
+    
+    await waitFor(() => {
+      const movesTitle = screen.getAllByText('Moves').find(el => el.tagName === 'H2')
+      expect(movesTitle).toBeInTheDocument()
+    })
+
+    const { userEvent } = await import('@testing-library/user-event')
+    const user = userEvent.setup()
+    const moreMovesButton = screen.getByText(/\+5 more/)
+    await user.click(moreMovesButton)
+    
+    await waitFor(() => {
+      expect(screen.getByText('All Moves')).toBeInTheDocument()
+    })
+  })
+
+  it('closes moves modal when clicking close button', async () => {
+    const pokemonWithManyMoves = {
+      ...mockPokemonDetail,
+      moves: Array.from({ length: 15 }, (_, i) => ({
+        name: `move-${i + 1}`,
+        learnMethod: 'level-up',
+      })),
+    }
+
+    vi.mocked(pokemonApi.getById).mockResolvedValue({
+      success: true,
+      data: pokemonWithManyMoves,
+    })
+    
+    renderDetailPage()
+    
+    await waitFor(() => {
+      const movesTitle = screen.getAllByText('Moves').find(el => el.tagName === 'H2')
+      expect(movesTitle).toBeInTheDocument()
+    })
+
+    const { userEvent } = await import('@testing-library/user-event')
+    const user = userEvent.setup()
+    
+    const moreMovesButton = screen.getByText(/\+5 more/)
+    await user.click(moreMovesButton)
+    
+    await waitFor(() => {
+      expect(screen.getByText('All Moves')).toBeInTheDocument()
+    })
+
+    const closeButton = screen.getByLabelText('Close modal')
+    await user.click(closeButton)
+    
+    await waitFor(() => {
+      expect(screen.queryByText('All Moves')).not.toBeInTheDocument()
+    })
+  })
+
+  it('fetches form IDs when pokemon has multiple forms', async () => {
+    const pokemonWithForms = {
+      ...mockPokemonDetail,
+      forms: [
+        { name: 'pikachu', isDefault: true },
+        { name: 'pikachu-cosplay', isDefault: false },
+      ],
+    }
+
+    vi.mocked(pokemonApi.getById).mockResolvedValue({
+      success: true,
+      data: pokemonWithForms,
+    })
+
+    vi.mocked(pokemonApi.getList).mockResolvedValue({
+      success: true,
+      data: {
+        results: [
+          { id: 10025, name: 'pikachu-cosplay', number: 25, image: '', types: ['electric'] },
+        ],
+        pagination: { total: 1, limit: 1, offset: 0, hasNext: false, hasPrev: false },
+      },
+    })
+    
+    renderDetailPage()
+    
+    await waitFor(() => {
+      expect(screen.getByText('Forms')).toBeInTheDocument()
+    })
+
+    await waitFor(() => {
+      expect(pokemonApi.getList).toHaveBeenCalled()
+    }, { timeout: 2000 })
   })
 })
 

@@ -55,7 +55,7 @@ function Header({ onLogout, searchValue, onSearchChange, sortByNumber, onToggleS
     <>
       <header className="header">
         <div className="header-top">
-          <Link to="/" className="logo">
+          <Link to="/pokemon/list" className="logo">
             <img src={pokeballIcon} alt="" className="pokeball-logo" />
             <span>Pokédex</span>
           </Link>

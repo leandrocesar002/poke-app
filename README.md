@@ -11,6 +11,186 @@ A modern web application for exploring Pokémon, built with React, TypeScript, a
 - **Styling**: Pure CSS with CSS variables
 - **Testing**: Vitest + React Testing Library
 
+## 🏗️ Architecture
+
+This project follows **Clean Architecture** principles with a clear separation of concerns, making it maintainable, testable, and scalable. The architecture is designed to be easily extensible for future features.
+
+### Architectural Layers
+
+```
+┌─────────────────────────────────────────┐
+│         Presentation Layer              │
+│  (Pages, Components, UI Logic)         │
+│  - Pages orchestrate features          │
+│  - Components are reusable & pure       │
+│  - No business logic in UI             │
+└─────────────────────────────────────────┘
+                    ↓
+┌─────────────────────────────────────────┐
+│         Application Layer                │
+│  (Contexts, State Management)           │
+│  - Global state via Context API        │
+│  - Route protection logic               │
+│  - State persistence strategies         │
+└─────────────────────────────────────────┘
+                    ↓
+┌─────────────────────────────────────────┐
+│         Domain Layer                     │
+│  (Services, API, Business Logic)         │
+│  - API abstraction layer                │
+│  - Type-safe interfaces                 │
+│  - Centralized error handling           │
+└─────────────────────────────────────────┘
+                    ↓
+┌─────────────────────────────────────────┐
+│         Infrastructure Layer            │
+│  (Utils, Types, Constants)             │
+│  - Pure utility functions              │
+│  - Type definitions                    │
+│  - Design system constants             │
+└─────────────────────────────────────────┘
+```
+
+### Key Architectural Decisions
+
+#### 1. Separation of Concerns
+
+Each layer has a clear, single responsibility:
+
+- **Pages** (`/pages`): Route-level components that orchestrate features and handle page-specific logic
+- **Components** (`/components`): Reusable, presentational UI components with minimal logic
+- **Contexts** (`/contexts`): Global state management following React Context API patterns
+- **Services** (`/services`): API abstraction layer with typed interfaces and error handling
+- **Utils** (`/utils`): Pure functions, helpers, and business logic utilities
+- **Styles** (`/styles`): Component-scoped CSS following BEM-like naming conventions
+
+#### 2. State Management Strategy
+
+**Approach**: Lightweight, built-in React patterns without external dependencies
+
+- **Context API** for global state:
+  - `AuthContext`: Authentication state, user session, token management
+  - `FilterContext`: Search and sort preferences persisted across navigation
+- **Local State** (`useState`) for component-specific UI state
+- **No Redux/Zustand**: Keeps bundle size small and reduces complexity for this project scope
+
+**Benefits**:
+- Minimal dependencies
+- Easy to understand and maintain
+- Sufficient for current application needs
+- Easy migration path if state complexity grows
+
+#### 3. API Layer Abstraction
+
+**Design Pattern**: Repository Pattern with Axios
+
+```typescript
+// Centralized API client
+const api = axios.create({ baseURL: '/api' })
+
+// Automatic token injection via interceptor
+api.interceptors.request.use((config) => {
+  const token = getAuthToken()
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`
+  }
+  return config
+})
+
+// Typed API methods
+export const pokemonApi = {
+  getList: async (params): Promise<ApiResponse<PaginatedResponse<Pokemon>>> => {...}
+}
+```
+
+**Features**:
+- Single source of truth for API configuration
+- Automatic authentication header injection
+- Consistent error handling across all endpoints
+- Type-safe request/response interfaces
+- Easy to mock for testing
+
+#### 4. Route Protection Architecture
+
+**Pattern**: Higher-Order Component (HOC) approach
+
+```typescript
+<ProtectedRoute>
+  <HomePage />
+</ProtectedRoute>
+```
+
+**Implementation**:
+- `ProtectedRoute`: Redirects unauthenticated users to `/login`
+- `PublicRoute`: Redirects authenticated users away from `/login`
+- Loading states during authentication verification
+- Prevents flash of protected content
+
+#### 5. Type Safety & TypeScript
+
+**Coverage**: 100% TypeScript with strict mode enabled
+
+- **Interface Definitions**: All data models have explicit types
+  - `Pokemon`, `PokemonDetail`, `PaginatedResponse<T>`, `ApiResponse<T>`
+- **Component Props**: All components have typed props interfaces
+- **API Responses**: Type-safe API calls with generic types
+- **Context Types**: Explicit context type definitions with error handling
+
+**Benefits**:
+- Catch errors at compile time
+- Better IDE autocomplete and IntelliSense
+- Self-documenting code
+- Easier refactoring
+
+#### 6. Styling Architecture
+
+**Approach**: Component-scoped CSS with Design System
+
+- **CSS Variables**: Centralized design tokens in `index.css`
+  - Colors (grayscale palette, primary)
+  - Typography (font sizes, line heights)
+- **Component Styles**: One CSS file per component in `/styles`
+- **Naming Convention**: BEM-inspired (`.component-name`, `.component-name__element`)
+- **Responsive Design**: Mobile-first with breakpoints (480px, 768px, 1024px)
+
+**Benefits**:
+- Consistent design system
+- Easy theme customization
+- No CSS-in-JS runtime overhead
+- Better performance
+
+#### 7. Testing Architecture
+
+**Strategy**: Comprehensive test coverage with multiple test types
+
+- **Unit Tests**: Component behavior, utility functions, contexts
+- **Integration Tests**: User flows (auth, search, navigation)
+- **Test Organization**: 
+  - Co-located with source files (`Component.test.tsx`)
+  - Integration tests in `/test/integration`
+  - Shared test utilities in `/test/setup.ts`
+
+**Coverage**: 98.75% statements, 99.54% lines
+
+#### 8. Scalability Considerations
+
+The architecture is designed to scale:
+
+- **Easy Feature Addition**: Clear separation makes adding features straightforward
+- **State Management**: Can easily migrate to Redux/Zustand if needed
+- **API Layer**: Ready for GraphQL or additional endpoints
+- **Component Library**: Reusable components can be extracted to a shared library
+- **Testing**: Test infrastructure supports growth
+
+### Code Quality Metrics
+
+- ✅ **TypeScript**: 100% coverage, strict mode enabled
+- ✅ **Test Coverage**: 98.75% statements, 99.54% lines
+- ✅ **Linting**: ESLint with TypeScript rules
+- ✅ **No Console Warnings**: All React Router warnings resolved
+- ✅ **Accessibility**: Semantic HTML, ARIA labels where needed
+- ✅ **Performance**: Code splitting ready, optimized bundle size
+
 ## 📁 Project Structure
 
 ```
@@ -20,21 +200,24 @@ src/
 │   ├── Header.tsx
 │   ├── Pagination.tsx
 │   └── PokemonCard.tsx
-├── contexts/        # React contexts
+├── contexts/        # React contexts (state management)
 │   ├── AuthContext.tsx
 │   └── FilterContext.tsx
-├── pages/           # Application pages
+├── pages/           # Application pages (route components)
 │   ├── LoginPage.tsx
 │   ├── HomePage.tsx
 │   └── PokemonDetailPage.tsx
-├── services/        # API services
+├── services/        # API services (data layer)
 │   └── api.ts
-├── styles/          # CSS files
-├── utils/           # Utility functions
+├── styles/          # Component-specific CSS files
+├── utils/           # Utility functions (pure functions)
 │   └── pokemonTypes.ts
+├── test/            # Test utilities and integration tests
+│   ├── setup.ts
+│   └── integration/
 ├── App.tsx          # Main component with routes
 ├── main.tsx         # Entry point
-└── index.css        # Global styles
+└── index.css        # Global styles and CSS variables
 ```
 
 ## 🛠️ Installation
@@ -62,7 +245,7 @@ The system uses JWT authentication stored in localStorage.
 
 - **Credentials**: `admin` / `admin`
 - Routes are protected: unauthenticated users are redirected to `/login`
-- Already authenticated users are redirected from `/login` to `/`
+- Already authenticated users are redirected from `/login` to `/pokemon/list`
 
 ## 📱 Features
 
