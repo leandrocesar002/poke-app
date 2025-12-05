@@ -57,72 +57,80 @@ function LoginPage() {
       </Helmet>
 
       <div className="login-page">
-        <div className="login-hero">
-          <div className="pokeball-bg"></div>
-          <div className="login-brand">
-            <div className="pokeball-icon">
-              <div className="ball-top"></div>
-              <div className="ball-bottom"></div>
-              <div className="ball-center"></div>
-            </div>
-            <h1>Pokédex</h1>
-            <p>Gotta Catch 'Em All!</p>
-          </div>
-        </div>
-
-        <div className="login-form-container">
-          <h2>Welcome Back</h2>
-          <p className="subtitle">Sign in to continue</p>
-
-          <form className="login-form" onSubmit={handleSubmit}>
-            {error && (
-              <div className="error-alert">
-                <svg viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
-                </svg>
-                {error}
+        <div className="login-card">
+          {/* Visual side - Desktop only */}
+          <div className="login-visual">
+            <div className="login-visual-content">
+              <div className="pokeball-visual">
+                <div className="center-circle"></div>
               </div>
-            )}
+              <h2>Pokédex</h2>
+              <p>Gotta Catch 'Em All!</p>
+            </div>
+          </div>
 
-            <div className={`input-group ${usernameError ? 'error' : ''}`}>
-              <label htmlFor="username">Username</label>
-              <input
-                type="text"
-                id="username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                onBlur={() => setTouched((t) => ({ ...t, username: true }))}
-                placeholder="Enter username"
-                disabled={isLoading}
-              />
-              {usernameError && <span className="error-text">{usernameError}</span>}
+          {/* Form side */}
+          <div className="login-form-section">
+            {/* Mobile brand */}
+            <div className="mobile-brand">
+              <div className="mobile-pokeball"></div>
+              <h1>Pokédex</h1>
+              <p>Gotta Catch 'Em All!</p>
             </div>
 
-            <div className={`input-group ${passwordError ? 'error' : ''}`}>
-              <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                onBlur={() => setTouched((t) => ({ ...t, password: true }))}
-                placeholder="Enter password"
-                disabled={isLoading}
-              />
-              {passwordError && <span className="error-text">{passwordError}</span>}
-            </div>
+            <h2>Welcome Back</h2>
+            <p className="subtitle">Sign in to continue</p>
 
-            <button type="submit" className="submit-btn" disabled={isLoading}>
-              {isLoading ? (
-                <span className="loading-spinner"></span>
-              ) : (
-                'Sign In'
+            <form className="login-form" onSubmit={handleSubmit}>
+              {error && (
+                <div className="error-alert">
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                  </svg>
+                  {error}
+                </div>
               )}
-            </button>
-          </form>
 
-          <div className="demo-hint">
-            <span>Demo:</span> admin / admin
+              <div className={`input-group ${usernameError ? 'error' : ''}`}>
+                <label htmlFor="username">Username</label>
+                <input
+                  type="text"
+                  id="username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  onBlur={() => setTouched((t) => ({ ...t, username: true }))}
+                  placeholder="Enter username"
+                  disabled={isLoading}
+                />
+                {usernameError && <span className="error-text">{usernameError}</span>}
+              </div>
+
+              <div className={`input-group ${passwordError ? 'error' : ''}`}>
+                <label htmlFor="password">Password</label>
+                <input
+                  type="password"
+                  id="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  onBlur={() => setTouched((t) => ({ ...t, password: true }))}
+                  placeholder="Enter password"
+                  disabled={isLoading}
+                />
+                {passwordError && <span className="error-text">{passwordError}</span>}
+              </div>
+
+              <button type="submit" className="submit-btn" disabled={isLoading}>
+                {isLoading ? (
+                  <span className="loading-spinner"></span>
+                ) : (
+                  'Sign In'
+                )}
+              </button>
+            </form>
+
+            <div className="demo-hint">
+              <span>Demo:</span> admin / admin
+            </div>
           </div>
         </div>
       </div>
@@ -131,4 +139,3 @@ function LoginPage() {
 }
 
 export default LoginPage
-

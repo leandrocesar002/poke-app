@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useAuth } from '../contexts/AuthContext'
+import { useFilter } from '../contexts/FilterContext'
 import { pokemonApi, Pokemon } from '../services/api'
 import PokemonCard from '../components/PokemonCard'
 import Pagination from '../components/Pagination'
@@ -9,34 +10,69 @@ import '../styles/HomePage.css'
 
 function HomePage() {
   const { logout } = useAuth()
+  const { sortByNumber, setSortByNumber, search, setSearch } = useFilter()
   const [pokemon, setPokemon] = useState<Pokemon[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState('')
-  const [search, setSearch] = useState('')
-  const [sortByNumber, setSortByNumber] = useState(true)
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
   const ITEMS_PER_PAGE = 21
+
+  // Detecta se o search é número(s) ou texto
+  const isNumericSearch = (value: string) => {
+    const terms = value.trim().split(/\s+/)
+    return terms.every(term => /^\d+$/.test(term))
+  }
+
+  // Converte espaços em vírgulas para múltipla busca
+  const formatSearchQuery = (value: string) => {
+    return value.trim().split(/\s+/).join(',')
+  }
+
+  // Determina se deve buscar por número
+  const shouldSearchByNumber = (): boolean => {
+    if (sortByNumber === true) return true
+    if (sortByNumber === false) return false
+    // Auto-detect: se não tiver filtro selecionado
+    return search ? isNumericSearch(search) : false
+  }
 
   const fetchPokemon = useCallback(async () => {
     setIsLoading(true)
     setError('')
 
-    const offset = (currentPage - 1) * ITEMS_PER_PAGE
+    const searchByNumber = shouldSearchByNumber()
+    const formattedSearch = search ? formatSearchQuery(search) : ''
 
-    const response = await pokemonApi.getList({
-      limit: ITEMS_PER_PAGE,
-      offset,
-      search: search || undefined,
-      sortBy: sortByNumber ? 'number' : 'name',
-      sortOrder: 'asc'
-    })
-
-    if (response.success && response.data) {
-      setPokemon(response.data.results)
-      setTotalPages(Math.ceil(response.data.pagination.total / ITEMS_PER_PAGE))
+    // Se tiver search e for busca por número, usa o endpoint específico
+    if (formattedSearch && searchByNumber) {
+      const response = await pokemonApi.getByNumber(formattedSearch)
+      
+      if (response.success && response.data) {
+        setPokemon(response.data.results)
+        setTotalPages(Math.ceil(response.data.pagination.total / ITEMS_PER_PAGE))
+      } else {
+        setPokemon([])
+        setTotalPages(1)
+      }
     } else {
-      setError(response.error || 'Failed to load Pokémon')
+      // Busca normal (por nome ou listagem)
+      const offset = (currentPage - 1) * ITEMS_PER_PAGE
+
+      const response = await pokemonApi.getList({
+        limit: ITEMS_PER_PAGE,
+        offset,
+        search: formattedSearch || undefined,
+        sortBy: searchByNumber ? 'number' : 'name',
+        sortOrder: 'asc'
+      })
+
+      if (response.success && response.data) {
+        setPokemon(response.data.results)
+        setTotalPages(Math.ceil(response.data.pagination.total / ITEMS_PER_PAGE))
+      } else {
+        setError(response.error || 'Failed to load Pokémon')
+      }
     }
 
     setIsLoading(false)
@@ -54,8 +90,8 @@ function HomePage() {
     setSearch(value)
   }
 
-  const toggleSortMode = () => {
-    setSortByNumber(!sortByNumber)
+  const handleSortChange = (byNumber: boolean) => {
+    setSortByNumber(byNumber)
   }
 
   return (
@@ -71,7 +107,7 @@ function HomePage() {
           searchValue={search}
           onSearchChange={handleSearch}
           sortByNumber={sortByNumber}
-          onToggleSort={toggleSortMode}
+          onToggleSort={handleSortChange}
         />
 
         <main className="main-content">

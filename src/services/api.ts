@@ -112,6 +112,15 @@ export const pokemonApi = {
     }
   },
 
+  getByNumber: async (number: string): Promise<ApiResponse<PaginatedResponse<Pokemon>>> => {
+    try {
+      const response = await api.get(`/pokemons/number/${number}`)
+      return response.data
+    } catch (error: any) {
+      return { success: false, error: error.response?.data?.error || 'Failed to fetch Pokémon' }
+    }
+  },
+
   getById: async (id: number | string): Promise<ApiResponse<PokemonDetail>> => {
     try {
       const response = await api.get(`/pokemons/${id}`)

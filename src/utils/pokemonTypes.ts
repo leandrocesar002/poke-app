@@ -1,23 +1,23 @@
 // Pokémon type colors
 const typeColors: Record<string, string> = {
-  normal: '#A8A878',
-  fire: '#F08030',
-  water: '#6890F0',
-  electric: '#F8D030',
-  grass: '#78C850',
-  ice: '#98D8D8',
-  fighting: '#C03028',
-  poison: '#A040A0',
-  ground: '#E0C068',
-  flying: '#A890F0',
-  psychic: '#F85888',
-  bug: '#A8B820',
-  rock: '#B8A038',
-  ghost: '#705898',
-  dragon: '#7038F8',
-  dark: '#705848',
-  steel: '#B8B8D0',
-  fairy: '#EE99AC'
+  bug: '#A7B723',
+  dark: '#75574C',
+  dragon: '#7037FF',
+  electric: '#F9CF30',
+  fairy: '#E69EAC',
+  fighting: '#C12239',
+  fire: '#F57D31',
+  flying: '#A891EC',
+  ghost: '#70559B',
+  normal: '#AAA67F',
+  grass: '#74CB48',
+  ground: '#DEC16B',
+  ice: '#9AD6DF',
+  poison: '#A43E9E',
+  psychic: '#FB5584',
+  rock: '#B69E31',
+  steel: '#B7B9D0',
+  water: '#6493EB'
 }
 
 export function getTypeColor(type: string): string {
@@ -31,4 +31,3 @@ export function getTypeGradient(types: string[]): string {
   }
   return `linear-gradient(135deg, ${getTypeColor(types[0])} 0%, ${getTypeColor(types[1])} 100%)`
 }
-
