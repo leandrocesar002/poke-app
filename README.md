@@ -597,45 +597,91 @@ export function TaskTable() {
 
 ## 📋 GenAI Usage During Development
 
-During the development of this Pokédex application, I used GenAI (Cursor with Claude) as a productivity tool to accelerate repetitive tasks and explore architectural solutions. Below are examples of how I used the tool strategically:
+During the development of this Pokédex application, I used GenAI (Cursor with Claude) as a productivity tool to accelerate repetitive tasks and explore architectural solutions. Below are the actual prompts I used, demonstrating strategic and thoughtful use of AI assistance:
 
 ### Initial Environment Setup
 
-**Objective**: Set up development environment from scratch on a new machine.
+**Prompt Used:**
+```
+I need to set up a development environment for a React + TypeScript project on a Windows machine. 
+The machine currently doesn't have Node.js or NPM installed. Please:
 
-**Approach**: I requested the AI to identify and install necessary dependencies (NVM, Node.js, NPM) following best practices for Windows, ensuring compatibility and proper environment configuration.
+1. Install NVM (Node Version Manager) for Windows using the most appropriate method
+2. Install the latest LTS version of Node.js through NVM
+3. Verify the installation and ensure NPM is working correctly
+4. Handle any PowerShell execution policy issues that might prevent npm scripts from running
+5. Configure the environment variables if needed
+
+Please use best practices for Windows development and ensure all tools are properly configured.
+```
 
 **Result**: Environment automatically configured with correct versions and adjusted execution policies.
 
 ### UI/UX Refactoring
 
-**Objective**: Redesign the login page to improve user experience and align with the design system.
+**Prompt Used:**
+```
+I need to refactor the login page to improve UX and align with our design system. The current header 
+feels disconnected from the rest of the interface. Please implement:
 
-**Approach**: I requested a complete refactoring of the login layout, specifying responsive design requirements:
-- Split-screen layout for desktop (decorative Pokeball on left, form on right)
-- Centered layout for mobile (compact Pokeball on top, form below)
-- Maintenance of project visual identity (colors, typography)
+1. A split-screen layout for desktop (≥768px):
+   - Left side: Large decorative Pokeball element with brand messaging
+   - Right side: Clean authentication form with proper spacing
+   
+2. A centered card layout for mobile (<768px):
+   - Compact Pokeball icon at the top
+   - Form below with adequate padding
+   
+3. Maintain the existing color scheme (red primary: #DC0A2D) and Poppins typography
+4. Ensure smooth transitions and responsive behavior
+5. Keep all existing validation logic intact
+
+The design should feel modern while maintaining the Pokémon theme consistency.
+```
 
 **Result**: Modern and responsive interface that significantly improves user experience.
 
 ### Complex Feature Implementation
 
-**Objective**: Implement intelligent sorting and search system with automatic type detection.
+**Prompt Used:**
+```
+I need to implement an intelligent search and sorting system for the Pokémon list. Requirements:
 
-**Approach**: I requested implementation of:
-- Filter selection modal (sort by number or name)
-- Automatic detection of search type (numeric vs. textual) when no filter is selected
-- Support for multiple simultaneous searches (separated by spaces, converted to API format)
+1. Create a modal component that opens when clicking the filter/sort button in the header
+2. Modal should have radio button options: "Sort by Number" and "Sort by Name"
+3. Implement automatic search type detection:
+   - When no explicit filter is selected AND user types in search:
+     * If input is purely numeric (e.g., "25", "004", "1 4 25"), use number search endpoint
+     * If input contains letters, use name search endpoint
+4. Support multiple search terms separated by spaces (convert to comma-separated for API)
+5. Update the search icon dynamically based on selected filter (searchNumber.svg or searchText.svg)
+6. Show filterDefault.svg when no filter is explicitly selected
+7. Add a clear button (X icon) to the search input that appears when there's text
+
+Please ensure the state persists across page navigation using React Context.
+```
 
 **Result**: Flexible and intuitive search system that improves application usability.
 
 ### Architectural Corrections
 
-**Objective**: Fix technical decisions that impacted performance and user experience.
+**Prompt Used:**
+```
+I need to fix a performance issue I introduced. I moved the filtering logic to the frontend, but 
+I forgot the backend already handles pagination efficiently. Please:
 
-**Approach**: I identified problems and requested specific fixes:
-- Revert frontend filtering to use backend pagination (better performance)
-- Create React context to persist filter state between navigations (better UX)
+1. Revert the frontend filtering approach
+2. Restore the API-based search and pagination using the existing backend endpoints
+3. Ensure the search parameters are correctly passed to the API
+4. Maintain the current UI/UX behavior
+
+Additionally, I noticed that when navigating to a Pokémon detail page and coming back, the search 
+and sort filters reset. Please create a React Context to persist:
+- The selected sort option (by number or name)
+- The current search value
+
+This context should wrap the application and maintain state across route changes.
+```
 
 **Result**: More performant application with better navigation experience.
 
