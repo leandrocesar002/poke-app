@@ -84,6 +84,19 @@ describe('Header', () => {
     expect(onToggleSort).toHaveBeenCalledWith(true)
   })
 
+  it('calls onToggleSort with false when selecting name option', () => {
+    const onToggleSort = vi.fn()
+    renderHeader({ onToggleSort, sortByNumber: true })
+    
+    const sortButton = screen.getByAltText('Sort options').closest('button')
+    fireEvent.click(sortButton!)
+    
+    const nameOption = screen.getByText('Name')
+    fireEvent.click(nameOption)
+    
+    expect(onToggleSort).toHaveBeenCalledWith(false)
+  })
+
   it('closes modal when clicking overlay', () => {
     renderHeader()
     const sortButton = screen.getByAltText('Sort options').closest('button')

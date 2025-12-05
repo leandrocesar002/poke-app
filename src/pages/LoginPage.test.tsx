@@ -128,5 +128,67 @@ describe('LoginPage', () => {
     
     expect(submitButton).not.toBeDisabled()
   })
+
+  it('does not submit form when validation fails', async () => {
+    const { authApi } = await import('../services/api')
+    const loginSpy = vi.mocked(authApi.login)
+    
+    renderLoginPage()
+    
+    const usernameInput = screen.getByLabelText('Username')
+    const passwordInput = screen.getByLabelText('Password')
+    const submitButton = screen.getByRole('button', { name: /sign in/i })
+    
+    fireEvent.change(usernameInput, { target: { value: 'ab' } })
+    fireEvent.change(passwordInput, { target: { value: 'abc' } })
+    fireEvent.click(submitButton)
+    
+    await waitFor(() => {
+      expect(loginSpy).not.toHaveBeenCalled()
+    })
+  })
+
+  it('displays error message when login fails', async () => {
+    const { authApi } = await import('../services/api')
+    vi.mocked(authApi.login).mockResolvedValue({
+      success: false,
+      error: 'Invalid credentials'
+    })
+    
+    renderLoginPage()
+    
+    const usernameInput = screen.getByLabelText('Username')
+    const passwordInput = screen.getByLabelText('Password')
+    const submitButton = screen.getByRole('button', { name: /sign in/i })
+    
+    fireEvent.change(usernameInput, { target: { value: 'admin' } })
+    fireEvent.change(passwordInput, { target: { value: 'wrong' } })
+    fireEvent.click(submitButton)
+    
+    await waitFor(() => {
+      expect(screen.getByText('Invalid credentials')).toBeInTheDocument()
+    })
+  })
+
+  it('displays default error message when login fails without error', async () => {
+    const { authApi } = await import('../services/api')
+    vi.mocked(authApi.login).mockResolvedValue({
+      success: false,
+    })
+    
+    renderLoginPage()
+    
+    const usernameInput = screen.getByLabelText('Username')
+    const passwordInput = screen.getByLabelText('Password')
+    const submitButton = screen.getByRole('button', { name: /sign in/i })
+    
+    fireEvent.change(usernameInput, { target: { value: 'admin' } })
+    fireEvent.change(passwordInput, { target: { value: 'admin' } })
+    fireEvent.click(submitButton)
+    
+    await waitFor(() => {
+      expect(screen.getByText('Login failed')).toBeInTheDocument()
+    })
+  })
 })
 

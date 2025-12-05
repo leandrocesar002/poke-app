@@ -67,5 +67,29 @@ describe('Pagination', () => {
     expect(screen.getByText('10')).toBeInTheDocument()
     expect(screen.getAllByText('...').length).toBeGreaterThanOrEqual(1)
   })
+
+  it('shows ellipsis on left when currentPage is near end', () => {
+    render(<Pagination currentPage={9} totalPages={10} onPageChange={mockOnPageChange} />)
+    expect(screen.getByText('1')).toBeInTheDocument()
+    expect(screen.getByText('10')).toBeInTheDocument()
+    const dots = screen.getAllByText('...')
+    expect(dots.length).toBeGreaterThanOrEqual(1)
+  })
+
+  it('shows ellipsis on right when currentPage is near start', () => {
+    render(<Pagination currentPage={2} totalPages={10} onPageChange={mockOnPageChange} />)
+    expect(screen.getByText('1')).toBeInTheDocument()
+    expect(screen.getByText('10')).toBeInTheDocument()
+    const dots = screen.getAllByText('...')
+    expect(dots.length).toBeGreaterThanOrEqual(1)
+  })
+
+  it('shows ellipsis on both sides when currentPage is in middle', () => {
+    render(<Pagination currentPage={5} totalPages={10} onPageChange={mockOnPageChange} />)
+    expect(screen.getByText('1')).toBeInTheDocument()
+    expect(screen.getByText('10')).toBeInTheDocument()
+    const dots = screen.getAllByText('...')
+    expect(dots.length).toBe(2)
+  })
 })
 

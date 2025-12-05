@@ -27,6 +27,23 @@ export default defineConfig({
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
+      exclude: [
+        'node_modules/',
+        'src/test/',
+        '**/*.d.ts',
+        '**/*.config.*',
+        '**/mockData',
+        '**/*.css',
+        '**/*.svg',
+        '**/*.png',
+        '**/*.jpg',
+        '**/*.jpeg',
+        '**/main.tsx',
+        '**/vite-env.d.ts',
+        '**/App.tsx',
+        'src/assets/**',
+        'src/styles/**',
+      ],
     },
   },
 })

@@ -158,6 +158,64 @@ describe('AuthContext', () => {
     expect(screen.getByTestId('username').textContent).toBe('saveduser')
   })
 
+  it('handles network error during login', async () => {
+    vi.mocked(authApi.login).mockRejectedValue(new Error('Network error'))
+    
+    render(
+      <AuthProvider>
+        <TestComponent />
+      </AuthProvider>
+    )
+    
+    await waitFor(() => {
+      expect(screen.getByTestId('loading').textContent).toBe('false')
+    })
+    
+    await act(async () => {
+      fireEvent.click(screen.getByText('Login'))
+    })
+    
+    await waitFor(() => {
+      expect(screen.getByTestId('authenticated').textContent).toBe('false')
+    })
+  })
+
+  it('clears storage when token verification fails', async () => {
+    localStorage.setItem('pokemon_auth_token', 'invalid-token')
+    localStorage.setItem('pokemon_user', JSON.stringify({ username: 'test' }))
+    
+    vi.mocked(authApi.verify).mockResolvedValue({ success: false })
+    
+    render(
+      <AuthProvider>
+        <TestComponent />
+      </AuthProvider>
+    )
+    
+    await waitFor(() => {
+      expect(localStorage.getItem('pokemon_auth_token')).toBeNull()
+      expect(localStorage.getItem('pokemon_user')).toBeNull()
+    })
+  })
+
+  it('clears storage when token verification throws error', async () => {
+    localStorage.setItem('pokemon_auth_token', 'invalid-token')
+    localStorage.setItem('pokemon_user', JSON.stringify({ username: 'test' }))
+    
+    vi.mocked(authApi.verify).mockRejectedValue(new Error('Network error'))
+    
+    render(
+      <AuthProvider>
+        <TestComponent />
+      </AuthProvider>
+    )
+    
+    await waitFor(() => {
+      expect(localStorage.getItem('pokemon_auth_token')).toBeNull()
+      expect(localStorage.getItem('pokemon_user')).toBeNull()
+    })
+  })
+
   it('throws error when useAuth is used outside provider', () => {
     const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {})
     
@@ -166,6 +224,20 @@ describe('AuthContext', () => {
     }).toThrow('useAuth must be used within an AuthProvider')
     
     consoleError.mockRestore()
+  })
+})
+
+describe('getAuthToken', () => {
+  it('returns token from localStorage', async () => {
+    localStorage.setItem('pokemon_auth_token', 'test-token')
+    const { getAuthToken } = await import('./AuthContext')
+    expect(getAuthToken()).toBe('test-token')
+  })
+
+  it('returns null when no token in localStorage', async () => {
+    localStorage.removeItem('pokemon_auth_token')
+    const { getAuthToken } = await import('./AuthContext')
+    expect(getAuthToken()).toBeNull()
   })
 })
 
